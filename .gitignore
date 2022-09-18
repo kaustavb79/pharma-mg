@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+migrations/
+PharmaMG\db_config.cnf
