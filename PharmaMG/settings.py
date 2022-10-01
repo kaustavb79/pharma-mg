@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-pwf1-)7e#y9q47rvm)q*z2^_=_70+!_zapu7h-%p3@!k9n2^qr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app_user_profile'
+    'phonenumber_field',  
+    'rest_framework',
+    'rest_framework.authtoken',
+    'app_user_profile', 
 ]
 
 MIDDLEWARE = [
@@ -49,6 +52,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_otp.middleware.OTPMiddleware',
+    'PharmaMG.middleware.URLMiddleware'
 ]
 
 ROOT_URLCONF = 'PharmaMG.urls'
@@ -65,6 +70,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'template_tags': 'PharmaMG.template_tags',
+            }
         },
     },
 ]
@@ -130,3 +138,43 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MAX_UPLOAD_SIZE = "104857600"
+
+LOGIN_URL = 'login'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'bkaustav416@gmail.com'
+EMAIL_HOST_PASSWORD = '@abc12345'
+
+
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
+
+FILE_UPLOAD_PERMISSIONS = 0o644
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
+
+
+AUTHENTICATION_BACKENDS = [
+    'app_user_profile.otp_backend.phone_backend.PhoneBackend',
+    'django.contrib.auth.backends.ModelBackend'
+]
+
+
+PHONE_LOGIN_ATTEMPTS = 3
+PHONE_LOGIN_OTP_LENGTH = 6
+PHONE_LOGIN_OTP_HASH_ALGORITHM = 'sha256'
+PHONE_LOGIN_DEBUG = True  # will include otp in generate response, default is False.
+
+TWILO_ACCOUNT_SID = "AC19446ef677f2cf245c43723c43511232"
+TWILO_AUTH_TOKEN = "517caa72e9e63bc0d6106daf227e9056"
+TWILO_TRIAL_NUMBER = "+13344544290"
