@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta name="viewport" content="user-scalable=no, width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <title>{% block title %}Chatbot {% endblock %}</title>
+        <link href="{% static 'website/favicon/lueinanalytics_favicon.jpg' %}" rel="icon" sizes="16x16" type="image/gif">
+        <script type="text/javascript" src="{% static 'jquery/js/jquery-3.6.1.js' %}"></script>
+        <script type="text/javascript" src="{% static 'translate/google_translate.js' %}"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+        {% block head %} {% endblock %}
+    </head>
+
+    <body class="body-class google_translate_element" id="body-id">
+        <div id="body-div">
+            <div id="navs">
+                <ul class="nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                  </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="{% url 'app_kg_graph_ui:list_category' %}">List Categories</a>
+                  </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="{% url 'app_kg_graph_ui:list_bots' %}">List Bots</a>
+                  </li>
+                </ul>
+            </div>
+
+            <div class="main-class-div">
+                <div class="main">
+                    <main id="main-tag">
+
+                        {% block content %}
+                        {% endblock %}
+
+                    </main>
+                </div>
+            </div>
+        </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    {% block javascript %}{% endblock %}
+    </body>
+</html>
