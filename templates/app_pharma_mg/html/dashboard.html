@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+{% include 'snippets/alerts/alert.html' %}
+<p><a href="{% url 'bui_logout' %}">Log Out</a></p>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

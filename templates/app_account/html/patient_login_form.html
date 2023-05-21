@@ -1,0 +1,32 @@
+{% load static %}
+
+<section class="login-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 banner-sec">
+                {% include 'snippets/carousel/carousel_home.html' %}
+            </div>
+            <div class="col-md-4 login-sec px-4 py-4">
+                <div class="NewSignIn_loginFormWrap">
+                    <h2 class="NewSignIn_typography__AV67I">Hi</h2>
+                    <p>Please enter your mobile number to login</p>
+                    <form>
+                        <div class="col-auto">
+                            <label class="sr-only" for="inlineFormInputGroup">Mobile Number</label>
+                            <div class="input-group mb-2">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text">+91</div>
+                              </div>
+                              <input type="tel" class="form-control" id="inlineFormInputGroup" minlength="10" maxlength="10" placeholder="Mobile Number">
+                            </div>
+                        </div>
+                        <button class="w-30 my-3 btn btn-primary" type="submit">Send OTP</button>
+                    </form>
+                    <p class="NewSignIn_signinInfo__eBbey">By signing up, I agree to the <a target="_blank"
+                            href="/privacy-policy">Privacy Policy</a>,<a target="_blank" href="/terms"> Terms and
+                            Conditions</a> of Pharma MG.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

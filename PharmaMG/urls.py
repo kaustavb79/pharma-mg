@@ -17,15 +17,18 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
-from app_account.views import home_view, business_home_view
+from app_account.views import home_view, business_login, business_logout
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', home_view, name="home"),
-    path('bui_login/', business_home_view, name="bui_login"),
+    path('bui_login/', business_login, name="bui_login"),
+    path('bui_logout/', business_logout, name="bui_logout"),
+
+    path('pharma-mg/', include(('app_pharma_mg.urls','app_pharma_mg'), namespace='pharmamg')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

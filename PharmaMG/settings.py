@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+
+    'app_account',
+    'app_pharma_mg',
 ]
 
 MIDDLEWARE = [
@@ -154,6 +157,22 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800  # 50 MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 52428800  # 50 MB
 
+
+
+"""
+---- TWILIO CONFIG ----
+"""
+
+twilio_config = json.load(open(BASE_DIR / "resources/pharma_mg/config/twilio_config.json"))
+SENDER_MOBILE_NUMBER = twilio_config['twilio_number']
+
+from twilio.rest import Client
+
+SMS_CLIENT = Client(twilio_config['account_sid'], twilio_config['auth_token'])
+
+"""
+---- TWILIO CONFIG END ----
+"""
 
 
 """

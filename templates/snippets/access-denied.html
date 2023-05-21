@@ -1,0 +1,19 @@
+
+{% load static %}
+
+<div class="mh100vh">
+    <div class="t-a-c p30 w90 ma mb50 bdr mt50 br5px c6">
+        <div class="mb20 c405 t-a-c">
+            <h1>Access Denied</h1>
+            <img src="{% static 'images/error.png' %}">
+        </div>
+
+        <div class="p10"><h2>Sorry about that, but you do not have permission to access the requested page.</h2></div>
+        <div class="p10">
+            <div>If you require assistance, please <a class="h-t-d-n">Contact us</a></div>
+        </div>
+        <div class="p10">
+            <div>Go to <a class="h-t-d-n" href="{%url 'root:home'%}">Home</a></div>
+        </div>
+    </div>
+</div>

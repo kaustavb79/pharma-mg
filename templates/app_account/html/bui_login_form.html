@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Pharma MG{% endblock %}
+
+{% block head %}
+<style>{% include 'app_account/css/bui_login_form.css' %}</style>
+{% endblock %}
+
+{% block content %}
+
+{% include 'snippets/alerts/alert.html' %}
+
+<form class="form-signin" action="{% url 'bui_login' %}" method="post">
+    {% csrf_token %}
+    <img class="mb-4" src="{% static 'images/logo/favicon.png' %}" alt="" width="72" height="57">
+    <h1 class="h3 mb-3 fw-normal">Business Login</h1>
+
+    <div class="form-floating">
+        {{form.username}}
+        <label for="floatingInput">Username</label>
+    </div>
+    <div class="form-floating">
+        {{form.password}}
+        <label for="floatingPassword">Password</label>
+    </div>
+
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+</form>
+{% endblock %}
+
+{% block javascript %}{% endblock %}
