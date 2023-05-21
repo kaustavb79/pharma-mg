@@ -19,8 +19,13 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
+from app_account.views import home_view, business_home_view
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('', home_view, name="home"),
+    path('bui_login/', business_home_view, name="bui_login"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

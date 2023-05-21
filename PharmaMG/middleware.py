@@ -9,4 +9,3 @@ class CustomMiddleware(MiddlewareMixin):
         HOST = request.get_host()
         API_URL = SCHEME + '://' + HOST
         request.api_url = API_URL
-        print('API_URL---', API_URL)
