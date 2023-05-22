@@ -1,12 +1,11 @@
-{% extends "base.html" %}
+{% extends "app_pharma_mg/html/main.html" %}
 {% load static %}
 
 {% block head %}
 {% endblock %}
 
-{% block content %}
-{% include 'snippets/alerts/alert.html' %}
-<p><a href="{% url 'bui_logout' %}">Log Out</a></p>
+{% block main_block %}
+dashboard
 {% endblock %}
 
 {% block javascript %}

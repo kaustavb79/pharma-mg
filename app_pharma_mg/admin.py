@@ -1,3 +1,14 @@
 from django.contrib import admin
+from .models import *
 
-# Register your models here.
+
+class PharmacyProfileAdminReadOnly(admin.ModelAdmin):
+    readonly_fields = ('date_time',)
+
+
+class PharmacyUsersAdminReadOnly(admin.ModelAdmin):
+    readonly_fields = ('date_time',)
+
+
+admin.site.register(Pharmacy, PharmacyProfileAdminReadOnly)
+admin.site.register(PharmacyUsers, PharmacyUsersAdminReadOnly)

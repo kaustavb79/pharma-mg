@@ -1,5 +1,14 @@
 from django import forms
 
+from app_account.models import ROLES
+
+BUI_LOGIN_ROLES = (
+    ('admin', 'admin'),
+    ('doctor', 'doctor'),
+    ('pharmacist', 'pharmacist'),
+    ('receptionist', 'receptionist'),
+)
+
 
 class BuiLoginForm(forms.Form):
     username = forms.CharField(
@@ -24,3 +33,15 @@ class BuiLoginForm(forms.Form):
                 'id': 'floatingPassword'
             }
         ))
+    role = forms.ChoiceField(
+        choices=BUI_LOGIN_ROLES,
+        label="Role",
+        initial='',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-select',
+                'id': 'formSelectRole'
+            }
+        ),
+        required=True
+    )

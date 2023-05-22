@@ -25,6 +25,8 @@ class Profile(models.Model):
 
     is_mobile_verified = models.BooleanField(default=False)
 
+    profile_pic = models.FileField(blank=True,null=True,upload_to="app_pharmamg/profile_images/")
+
     date_time = models.DateTimeField(auto_now_add=True)
 
     class Meta:
