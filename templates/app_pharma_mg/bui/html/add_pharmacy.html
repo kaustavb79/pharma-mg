@@ -1,0 +1,32 @@
+{% extends "app_pharma_mg/bui/html/main.html" %}
+{% load static %}
+
+{% block main_block %}
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-user-plus me-1"></i>
+        Add Pharmacy
+    </div>
+    <div class="card-body">
+        {% include 'snippets/alerts/form_alerts.html' %}
+        <form class="px-3 py-4 text-center" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.label != "Registration certificates" %}
+                <div class="form-floating my-4">
+                    <label class="{% for class in field.label_classes %}{{ class }} {% endfor %}"
+                           for="{{ field.auto_id }}">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+                {% else %}
+                <div class="mb-3 my-4">
+                    <label class="form-label text-left" for="{{ field.auto_id }}">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+                {% endif %}
+            {% endfor %}
+            <button class="w-40 btn btn-lg btn-primary my-4" type="submit">Add Pharmacy</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

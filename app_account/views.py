@@ -28,7 +28,8 @@ def home_view(request):
     if request.user.is_authenticated:
         profile_get_qs = Profile.objects.get(user=request.user)
         print("profile_get_qs: ", profile_get_qs)
-        return redirect('pharmamg:dashboard')
+        if profile_get_qs.role in ['admin','doctor','pharmacist','receptionist','delivery_person']:
+            return redirect('pharmamg:dashboard')
 
     context_payload = {}
     return render(request=request, template_name=template, context=context_payload)

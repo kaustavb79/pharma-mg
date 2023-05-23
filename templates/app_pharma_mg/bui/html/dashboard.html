@@ -1,0 +1,37 @@
+{% extends "app_pharma_mg/bui/html/main.html" %}
+{% load static %}
+
+{% block main_block %}
+<h1 class="mt-4">Dashboard</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Dashboard</li>
+</ol>
+<div class="row">
+    <div class="col-xl-6 col-md-6">
+        <div class="card bg-white text-dark mb-4 text-center">
+            <div class="card-body fw-bold lh-sm">
+                <span class="fs-1">{{pharmacy_get_qs|length}}</span>
+                <hr class="dropdown-divider" />
+                Pharmacies Registered
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-dark stretched-link" href="{% url 'pharmamg:manage_pharmacy' %}">Manage</a>
+                <div class="small text-dark"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6 col-md-6">
+        <div class="card bg-white text-dark mb-4 text-center">
+            <div class="card-body fw-bold lh-sm">
+                <span class="fs-1">{{pharmacy_get_qs|length}}</span>
+                <hr class="dropdown-divider" />
+                Clinics Registered
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-dark stretched-link" href="#">Manage</a>
+                <div class="small text-dark"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

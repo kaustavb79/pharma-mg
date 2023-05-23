@@ -1,0 +1,16 @@
+{% for pharmacy in pharmacy_user_get_qs %}
+<tr>
+    <td>{{pharmacy.pharmacy.name|title}}</td>
+    <td>{{pharmacy.pharmacy.store_phone}}</td>
+    <td>{{pharmacy.pharmacy.email}}</td>
+    <td>{{pharmacy.pharmacy.is_verified}}</td>
+    <td>
+        <ul class="list-group list-group-horizontal">
+          <li class="list-group-item">
+              <a href="#"><i class="fas fa-trash bg-outline-danger" aria-hidden="true"></i></a>
+          </li>
+          <li class="list-group-item">A second item</li>
+        </ul>
+    </td>
+</tr>
+{% endfor %}
