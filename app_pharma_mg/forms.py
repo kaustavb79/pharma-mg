@@ -1,4 +1,7 @@
-from django.forms import ModelForm, BooleanField, DateInput, TextInput, NumberInput, FileInput
+from django.core.exceptions import ValidationError
+from django.forms import ModelForm, DateInput, TextInput, NumberInput, FileInput, CheckboxInput, \
+    EmailInput
+from django.utils.translation import gettext_lazy as _
 
 from app_pharma_mg.models import Pharmacy
 
@@ -25,6 +28,12 @@ class NewPharmacyRegistrationForm(ModelForm):
                 attrs={
                     'class': "form-control",
                     'help_text': 'Enter Pharmacy Name',
+                }
+            ),
+            'email': EmailInput(
+                attrs={
+                    'class': "form-control",
+                    'help_text': 'Enter registered Email ID'
                 }
             ),
             'gst_registration_number': TextInput(
@@ -60,13 +69,20 @@ class NewPharmacyRegistrationForm(ModelForm):
                     'multiple': True
                 }
             ),
+            'is_verified': CheckboxInput(
+                attrs={
+                    'class': "form-check-input",
+                    'help_text': 'Is Pharmacy genuine?'
+                }
+            )
         }
 
     def __init__(self, *args, **kwargs):
-        profile_get_qs = kwargs.get("profile_get_qs", False)
-        self.profile_get_qs = profile_get_qs
+        pharmacy_get_qs = Pharmacy.objects.all()
+        self.pharmacy_get_qs = pharmacy_get_qs
 
         print('kwargs----0', kwargs)
+        print('self.pharmacy_get_qs----0', self.pharmacy_get_qs)
 
         super(NewPharmacyRegistrationForm, self).__init__(*args, **kwargs)
         self.fields['email'].label = 'Email Address'
@@ -79,15 +95,26 @@ class NewPharmacyRegistrationForm(ModelForm):
         self.fields['store_phone'].required = True
         self.fields['address'].required = True
         self.fields['email'].required = True
-        self.fields['email'].required = True
         self.fields['gst_registration_number'].required = True
-
-        self.fields['is_verified'] = BooleanField(initial=False, required=False)
-        self.fields['is_phone_verified'] = BooleanField(initial=False, required=False)
+        self.fields['is_verified'].required = True
+        self.fields['is_phone_verified'].required = True
+        self.fields['date_of_establishment'].required = True
 
         for visible in self.visible_fields():
-            visible.field.widget.attrs['class'] = 'form-control'
+            if not isinstance(visible.field.widget, CheckboxInput):
+                visible.field.widget.attrs['class'] = 'form-control'
+            else:
+                visible.field.widget.attrs['class'] = 'form-check-input'
+
+            visible.label_classes = ('col-sm-2','col-form-label',)
 
     def clean(self):
         cleaned_data = super(NewPharmacyRegistrationForm, self).clean()
         email = self.cleaned_data.get("email")
+        store_phone = self.cleaned_data.get("store_phone")
+
+        pharmacy_get_qs = self.pharmacy_get_qs
+        if pharmacy_get_qs:
+            for pharmacy in pharmacy_get_qs:
+                if pharmacy.email == email or pharmacy.store_phone == store_phone:
+                    raise ValidationError(_('Pharmacy already exists with this email/ phone number!'))
