@@ -1,0 +1,43 @@
+{% extends "app_pharma_mg/bui/html/main.html" %}
+{% load static %}
+
+{% block main_block %}
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-user-plus me-1"></i>
+        Add Clinic
+    </div>
+    <div class="card-body">
+        {% include 'snippets/alerts/form_alerts.html' %}
+        <form class="px-3 py-4 text-center" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.label != "Registration certificates" and field.field.widget.input_type != "checkbox" %}
+                <div class="form-group row my-4">
+                    <label class="{% for class in field.label_classes %}{{ class }} {% endfor %}"
+                           for="{{ field.auto_id }}">{{ field.label }}</label>
+                    <div class="col-sm-10">
+                    {{ field }}
+                    </div>
+                </div>
+                {% elif field.field.widget.input_type == "checkbox" %}
+                <div class="form-check">
+                  <label class="form-check-label control-label" for="{{ field.auto_id }}">
+                      {{ field.label }}
+                  </label>
+                    {{ field }}
+                </div>
+                {% else %}
+                <div class="mb-3 my-4 row">
+                    <label class="form-label {% for class in field.label_classes %}{{ class }} {% endfor %}" for="{{ field.auto_id }}">{{ field.label }}</label>
+                    <div class="col-sm-10">
+                    {{ field }}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+            <button class="w-40 btn btn-lg btn-primary my-4" type="submit">Add Clinic</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

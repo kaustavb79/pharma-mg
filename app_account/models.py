@@ -3,12 +3,11 @@ from django.contrib.auth.models import User
 from django.db import models
 
 ROLES = (
-    ('admin', 'admin'),
-    ('patient', 'patient'),
-    ('doctor', 'doctor'),
-    ('pharmacist', 'pharmacist'),
-    ('receptionist', 'receptionist'),
-    ('delivery_person', 'delivery_person'),
+    ('admin', 'ADMIN'),
+    ('patient', 'PATIENT'),
+    ('doctor', 'DOCTOR'),
+    ('pharmacist', 'PHARMACIST'),
+    ('receptionist', 'RECIPTIONIST')
 )
 
 
@@ -22,11 +21,13 @@ class Profile(models.Model):
 
     first_name = models.CharField(blank=True, null=True,max_length=200)
     last_name = models.CharField(blank=True, null=True,max_length=200)
+    user_address = models.TextField(blank=True, null=True)
 
     is_mobile_verified = models.BooleanField(default=False)
 
     profile_pic = models.FileField(blank=True,null=True,upload_to="app_pharmamg/profile_images/")
 
+    updated_on = models.DateTimeField(auto_now=True)
     date_time = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -45,6 +46,7 @@ class OtpVerify(models.Model):
     is_verified = models.BooleanField(default=False)
     has_expired = models.BooleanField(default=False)
 
+    updated_on = models.DateTimeField(auto_now=True)
     date_time = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -65,6 +67,7 @@ class Address(models.Model):
 
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
+    updated_on = models.DateTimeField(auto_now=True)
     date_time = models.DateTimeField(auto_now_add=True)
 
     class Meta:

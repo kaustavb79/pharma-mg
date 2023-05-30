@@ -10,28 +10,30 @@
     <div class="col-xl-6 col-md-6">
         <div class="card bg-white text-dark mb-4 text-center">
             <div class="card-body fw-bold lh-sm">
-                <span class="fs-1">{{pharmacy_get_qs|length}}</span>
+                <span class="fs-1">{{consultation_get_qs|length}}</span>
                 <hr class="dropdown-divider" />
-                Pharmacies Registered
+                Consultations Done
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-dark stretched-link" href="{% url 'pharmamg:manage_pharmacy' %}">Manage</a>
+                <a class="small text-dark stretched-link" href="{% url 'pharmamg:manage_consultation_view' %}">Manage</a>
                 <div class="small text-dark"><i class="fas fa-angle-right"></i></div>
             </div>
         </div>
     </div>
+    {% if clinic_user_get_qs.role == 'doctor' %}
     <div class="col-xl-6 col-md-6">
         <div class="card bg-white text-dark mb-4 text-center">
             <div class="card-body fw-bold lh-sm">
-                <span class="fs-1">{{clinic_get_qs|length}}</span>
+                <span class="fs-1">{{clinic_users_filter_qs|length}}</span>
                 <hr class="dropdown-divider" />
-                Clinics Registered
+                Employees Working
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-dark stretched-link" href="pharmamg:manage_clinic">Manage</a>
+                <a class="small text-dark stretched-link" href="{% url 'pharmamg:manage_clinic_users' %}">Manage</a>
                 <div class="small text-dark"><i class="fas fa-angle-right"></i></div>
             </div>
         </div>
     </div>
+    {% endif %}
 </div>
 {% endblock %}

@@ -1,0 +1,15 @@
+{% for employee in pharmacy_users_filter_qs %}
+<tr>
+    <td>{{employee.pharmacy_user_id}}</td>
+    <td>{{employee.user.first_name|title}} {{pharmacy.user.last_name|title}}</td>
+    <td>{{employee.user.phone}}</td>
+    <td>{{employee.role|title}}</td>
+    <td>
+        <ul class="list-group list-group-horizontal">
+          <li class="list-group-item">
+              <a type="button" class="btn btn-outline-danger delete" href="{% url 'pharmamg:delete_pharmacy_employee' user_id=employee.pharmacy_user_id %}"><i class="fas fa-trash bg-outline-danger" aria-hidden="true"></i></a>
+          </li>
+        </ul>
+    </td>
+</tr>
+{% endfor %}

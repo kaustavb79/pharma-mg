@@ -1,0 +1,101 @@
+{% extends "app_pharma_mg/bui/html/main.html" %}
+{% load static %}
+
+{% block main_block %}
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-user-plus me-1"></i>
+        Create Appointment
+    </div>
+    <div class="card-body">
+        {% include 'snippets/alerts/form_alerts.html' %}
+        <form class="px-3 py-4 text-center" id="appointment_form" name="createAppointmentForm" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3 my-4 row">
+                <label class="form-label col-sm-4 col-form-label control-label" for="formSelectMode">Payment Status</label>
+                <div class="col-sm-8">
+                    <select name="mode" class="form-select" id="formSelectMode" required>
+                        <option value="offline">CLINIC VISIT</option>
+                        <option value="oncall">ON CALL</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row my-4">
+                <label class="col-sm-4 col-form-label " for="id_patient_mobile">Patient Mobile</label>
+                <div class="col-sm-8">
+                <input type="number" name="patient_mobile" class="form-control" maxlength="10" minlength="10" id="id_patient_mobile" required>
+                </div>
+            </div>
+            <div class="form-group row my-4">
+                <label class="col-sm-4 col-form-label " for="id_patient_name">Patient Name</label>
+                <div class="col-sm-8">
+                <input type="text" name="patient_name" class="form-control" maxlength="150" id="id_patient_name">
+                </div>
+            </div>
+            <div class="form-group row my-4">
+                <label class="col-sm-4 col-form-label " for="id_patient_address">Patient Address</label>
+                <div class="col-sm-8">
+                    <textarea name="patient_address" cols="40" rows="10" class="form-control" required="" id="id_patient_address"></textarea>
+                </div>
+            </div>
+
+            <div class="mb-3 my-4 row">
+                <label for="formSelectDate" class="form-label col-sm-4 col-form-label control-label">Appointment Date</label>
+                <div class="col-sm-8">
+                  <div class="input-group date" id="datepicker">
+                    <input type="text" class="form-control" id="formSelectDate" name="appointment_date"/>
+                    <span class="input-group-append">
+                      <span class="input-group-text bg-light d-block">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+            </div>
+
+            <div class="mb-3 my-4 row">
+                <label class="form-label col-sm-4 col-form-label control-label" for="formSelectTime">Appointment Time</label>
+                <div class="col-sm-8">
+                    <select name="appointment_time" class="form-select" id="formSelectTime" required>
+                        {% for key,val in timings.items %}
+                        <option value="{{key}}">{{val}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row my-4">
+                <label class="col-sm-4 col-form-label " for="id_consultation_charge">Consultation Charge</label>
+                <div class="col-sm-8">
+                <input type="number" name="consultation_charge" class="form-control" maxlength="150" id="id_consultation_charge">
+                </div>
+            </div>
+
+            <div class="mb-3 my-4 row">
+                <label class="form-label col-sm-4 col-form-label control-label" for="formSelectPaymentStatus">Payment Status</label>
+                <div class="col-sm-8">
+                    <select name="payment_status" class="form-select" id="formSelectPaymentStatus" required>
+                        <option value="success">RECIEVED</option>
+                        <option value="incomplete">HOLD</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3 my-4 row">
+                <label class="form-label col-sm-4 col-form-label control-label" for="formSelectPaymentMode">Payment Mode</label>
+                <div class="col-sm-8">
+                    <select name="payment_mode" class="form-select" id="formSelectPaymentMode" required>
+                        <option value="cash">CASH</option>
+                        <option value="card">CARD</option>
+                        <option value="upi">UPI</option>
+                    </select>
+                </div>
+            </div>
+            <button class="w-40 btn btn-lg btn-primary my-4" type="submit">Create</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{% include 'app_pharma_mg/bui/js/clinic/create_appointment.js' %}
+{% endblock %}

@@ -12,7 +12,15 @@
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
+    {% if profile_get_qs.role == 'admin' %}
     <a class="navbar-brand ps-3" href="{% url 'pharmamg:dashboard' %}">{{profile_get_qs.role|title}} Dashboard</a>
+    {% elif profile_get_qs.role == 'pharmacist' %}
+    <a class="navbar-brand ps-3" href="{% url 'pharmamg:pharmacy_dashboard' %}">{{profile_get_qs.role|title}} Dashboard</a>
+    {% elif profile_get_qs.role == 'doctor' %}
+    <a class="navbar-brand ps-3" href="{% url 'pharmamg:clinic_dashboard' %}">{{profile_get_qs.role|title}} Dashboard</a>
+    {% elif profile_get_qs.role == 'reciptionist' %}
+    <a class="navbar-brand ps-3" href="{% url 'pharmamg:clinic_dashboard' %}">{{profile_get_qs.role|title}} Dashboard</a>
+    {% endif %}
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
     <!-- Navbar-->
@@ -32,29 +40,90 @@
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
                 <div class="nav">
-                    <div class="sb-sidenav-menu-heading">Home</div>
-                    <a class="nav-link" href="{% url 'pharmamg:dashboard' %}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                        Dashboard
-                    </a>
-                    <div class="sb-sidenav-menu-heading">Pharmacy</div>
-                    <a class="nav-link" href="{% url 'pharmamg:add_pharmacy' %}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-user-plus"></i></div>
-                        Add Pharmacy
-                    </a>
-                    <a class="nav-link" href="{% url 'pharmamg:manage_pharmacy' %}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                        Manage Pharmacy
-                    </a>
-                    <div class="sb-sidenav-menu-heading">Clinic</div>
-                    <a class="nav-link" href="{% url 'pharmamg:dashboard' %}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-user-plus"></i></div>
-                        Add Clinic
-                    </a>
-                    <a class="nav-link" href="{% url 'pharmamg:dashboard' %}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                        Manage Clinic
-                    </a>
+                    {% if profile_get_qs.role == 'admin' %}
+                        <div class="sb-sidenav-menu-heading">Home</div>
+                        <a class="nav-link" href="{% url 'pharmamg:dashboard' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Pharmacy</div>
+                        <a class="nav-link" href="{% url 'pharmamg:add_pharmacy' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user-plus"></i></div>
+                            Add Pharmacy
+                        </a>
+                        <a class="nav-link" href="{% url 'pharmamg:manage_pharmacy' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Manage Pharmacy
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Clinic</div>
+                        <a class="nav-link" href="{% url 'pharmamg:add_clinic' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user-plus"></i></div>
+                            Add Clinic
+                        </a>
+                        <a class="nav-link" href="{% url 'pharmamg:manage_clinic' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Manage Clinic
+                        </a>
+                    {% elif profile_get_qs.role == 'pharmacist' %}
+                        <div class="sb-sidenav-menu-heading">Home</div>
+                        <a class="nav-link" href="{% url 'pharmamg:pharmacy_dashboard' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        {% if pharmacy_user_get_qs.role == 'owner' %}
+                        <a class="nav-link" href="{% url 'pharmamg:add_pharmacy_employee' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user-plus"></i></div>
+                            Add User
+                        </a>
+                        <a class="nav-link" href="{% url 'pharmamg:manage_pharmacy_users' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Manage User
+                        </a>
+                        {% endif %}
+                        <div class="sb-sidenav-menu-heading">Orders</div>
+                        <a class="nav-link" href="{% url 'pharmamg:create_order_pharmacy_view' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user-plus"></i></div>
+                            Create Order
+                        </a>
+                        <a class="nav-link" href="{% url 'pharmamg:manage_pharmacy_orders_view' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Manage Orders
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Items</div>
+                        <a class="nav-link" href="{% url 'pharmamg:add_pharmacy_product' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user-plus"></i></div>
+                            Add New Item
+                        </a>
+                        <a class="nav-link" href="{% url 'pharmamg:manage_pharmacy_products' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Manage Items
+                        </a>
+                    {% elif profile_get_qs.role == 'doctor' or profile_get_qs.role == 'receptionist' %}
+                        <div class="sb-sidenav-menu-heading">Home</div>
+                        <a class="nav-link" href="{% url 'pharmamg:clinic_dashboard' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        {% if clinic_user_get_qs.role == 'doctor' %}
+                        <a class="nav-link" href="{% url 'pharmamg:add_clinic_employee' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user-plus"></i></div>
+                            Add User
+                        </a>
+                        <a class="nav-link" href="{% url 'pharmamg:manage_clinic_users' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Manage User
+                        </a>
+                        {% endif %}
+                        <div class="sb-sidenav-menu-heading">Consultations</div>
+                        <a class="nav-link" href="{% url 'pharmamg:schedule_consultation_view' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user-plus"></i></div>
+                            New Appointment
+                        </a>
+                        <a class="nav-link" href="{% url 'pharmamg:manage_consultation_view' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Manage Appointments
+                        </a>
+                    {% endif %}
                 </div>
             </div>
             <div class="sb-sidenav-footer">

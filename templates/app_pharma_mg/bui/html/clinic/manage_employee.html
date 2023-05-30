@@ -1,0 +1,31 @@
+{% extends "app_pharma_mg/bui/html/main.html" %}
+{% load static %}
+
+{% block main_block %}
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        Manage Pharmacy
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple" class="display responsive" width="100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Role</th>
+                    <th>Specialization</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% include 'app_pharma_mg/bui/html/clinic/partial_manage_employee.html' %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}

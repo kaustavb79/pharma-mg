@@ -3,16 +3,16 @@ from django import forms
 from app_account.models import ROLES
 
 BUI_LOGIN_ROLES = (
-    ('admin', 'admin'),
-    ('doctor', 'doctor'),
-    ('pharmacist', 'pharmacist'),
-    ('receptionist', 'receptionist'),
+    ('admin', 'ADMIN'),
+    ('doctor', 'DOCTOR'),
+    ('pharmacist', 'PHARMACIST'),
+    ('receptionist', 'RECIPTIONIST'),
 )
 
 
 class BuiLoginForm(forms.Form):
     username = forms.CharField(
-        max_length=50,
+        max_length=200,
         widget=forms.TextInput(
             attrs={
                 'class': "form-control",

@@ -11699,3 +11699,13 @@ body {
   font-size: 0.75rem;
   border-radius: 0.25rem !important;
 }
+
+.form-group.required .control-label:after
+{
+      content:"*";
+      color:red;
+}
+
+.input-group-append {
+  cursor: pointer;
+}
