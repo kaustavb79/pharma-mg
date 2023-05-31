@@ -11,7 +11,7 @@ from django.template.loader import render_to_string
 from django.utils.dateparse import parse_date
 
 from app_account.models import Profile, Address
-from app_account.src.utils import generate_random_user
+from app_account.src.utils import generate_random_user, generate_random_patient_user
 from app_pharma_mg.forms import NewPharmacyRegistrationForm, NewPharmacyEmployeeForm, NewClinicRegistrationForm, \
     AddProductForm, NewClinicEmployeeForm
 from app_pharma_mg.models import Pharmacy, PharmacyUsers, Clinic, ClinicUsers, Order, Item, Transaction, Consultation, \
@@ -614,8 +614,8 @@ def create_order_ajax(request):
 
             # Create Patient
             username = f"{first_name.replace(' ', '_').lower()}__{random.randint(1000, 9999)}"
-            user = generate_random_user(username, first_name=first_name, last_name=last_name,
-                                        email="abc@gmail.com", phone=patient_mobile)
+            user = generate_random_patient_user(username, first_name=first_name, last_name=last_name,
+                                                email=f"abc{random.randint(1000, 9999)}@gmail.com")
             patient_profile_create_qs = Profile.objects.create(
                 user=user,
                 role="patient",
@@ -832,8 +832,8 @@ def schedule_consultation_ajax(request):
 
             # Create Patient
             username = f"{first_name.replace(' ', '_').lower()}__{random.randint(1000, 9999)}"
-            user = generate_random_user(username, first_name=first_name, last_name=last_name,
-                                        email="abc@gmail.com", phone=patient_mobile)
+            user = generate_random_patient_user(username, first_name=first_name, last_name=last_name,
+                                                email=f"abc{random.randint(1000, 9999)}@gmail.com")
             patient_profile_create_qs = Profile.objects.create(
                 user=user,
                 role="patient",
@@ -902,8 +902,6 @@ def manage_consultation_view(request):
 ###############################################
 """
 
-
-
 """
 ###############################################
             PATIENT VIEWS
@@ -911,6 +909,20 @@ def manage_consultation_view(request):
                 START
 ###############################################
 """
+
+
+@login_required
+def patient_home(request):
+    template = "app_pharma_mg/customer/product_view.html"
+
+    profile_get_qs = Profile.objects.get(user=request.user)
+    product_get_qs = Item.objects.all()
+    context_payload = {
+        "profile_get_qs": profile_get_qs,
+        "product_get_qs":product_get_qs
+    }
+    return render(request=request, template_name=template, context=context_payload)
+
 
 """
 ###############################################

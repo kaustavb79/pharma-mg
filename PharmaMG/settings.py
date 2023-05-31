@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'crispy_forms',
+    'cart',
 
     'app_account',
     'app_pharma_mg',
@@ -68,6 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processor.cart_total_amount',
             ],
         },
     },
@@ -157,14 +160,21 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800  # 50 MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 52428800  # 50 MB
 
+CUSTOMER_LOGIN_PWD = "CustWelcome@12343"
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+STRIPE_PUBLISHABLE_KEY = 'pk_test_pSFvQoPkqRjCwGnsdk1LCSC100uOeJdqFx'
+STRIPE_SECRET_KEY = 'sk_test_ZspgfPUkbme9FRsbo995ixgi00eAsfvTUK'
+
+CART_SESSION_ID = 'cart'
 
 """
 ---- TWILIO CONFIG ----
 """
 
 twilio_config = json.load(open(BASE_DIR / "resources/pharma_mg/config/twilio_config.json"))
-SENDER_MOBILE_NUMBER = twilio_config['twilio_number']
+REGISTERED_NUMBER = twilio_config['twilio_number']
 
 from twilio.rest import Client
 

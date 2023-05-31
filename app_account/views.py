@@ -1,16 +1,17 @@
+import logging as log_print
+import random
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404
-import logging as log_print
-
-from django.urls import reverse
+from django.shortcuts import render, redirect
 
 from app_account.forms import BuiLoginForm
 from app_account.models import Profile, OtpVerify
 from app_account.src.twilio_v1 import send_otp
+from app_account.src.utils import generate_random_patient_user
 
 
 def setup_custom_logger(name):
@@ -39,7 +40,7 @@ def home_view(request):
         elif profile_get_qs.role in ['doctor', 'receptionist']:
             return redirect('pharmamg:clinic_dashboard')
         elif profile_get_qs.role in ['patient']:
-            return redirect('pharmamg:dashboard')
+            return redirect('pharmamg:patient_home')
 
     context_payload = {}
     return render(request=request, template_name=template, context=context_payload)
@@ -86,7 +87,7 @@ def business_login(request):
             elif profile_get_qs.role in ['pharmacist', 'delivery_person']:
                 return redirect('pharmamg:pharmacy_dashboard')
             elif profile_get_qs.role in ['doctor', 'receptionist']:
-                return redirect('pharmamg:dashboard')
+                return redirect('pharmamg:clinic_dashboard')
 
         form = BuiLoginForm()
 
@@ -101,10 +102,6 @@ def business_logout(request):
     return redirect("bui_login")
 
 
-
-
-
-@login_required
 def register_user_ajax(request):
     print('request.api_url---', request.api_url)
     status = "failure"
@@ -112,24 +109,35 @@ def register_user_ajax(request):
     json_response = {}
 
     if request.method == "POST":
-        fname = request.POST['fname']
-        lname = request.POST['lname']
-        phone = request.POST['phone']
-        email = request.POST['email']
-        registration_id = request.POST['registration_id']
-        hospital_or_clinic_name = request.POST['hospital_or_clinic_name']
+        mobile = request.POST['mobile']
 
-        profile_get_qs = get_object_or_404(Profile, user=request.user)
+        last_name = "User"
+        first_name = "Anonymous"
+
+        try:
+            profile_get_qs = Profile.objects.get(phone=mobile, role="patient")
+        except:
+            # Create Patient
+            username = f"{first_name.replace(' ', '_').lower()}__{random.randint(1000, 9999)}"
+            user = generate_random_patient_user(username, first_name=first_name, last_name=last_name,
+                                                email=f"abc{random.randint(1000, 9999)}@gmail.com")
+            profile_get_qs = Profile.objects.create(
+                user=user,
+                role="patient",
+                phone=mobile,
+                first_name=first_name,
+                last_name=last_name
+            )
+            logger.exception("Patient Created")
+
+        profile_get_qs = Profile.objects.get(phone=mobile, role='patient')
         if profile_get_qs:
-            status = "success"
-            profile_get_qs.first_name = fname
-            profile_get_qs.last_name = lname
-            profile_get_qs.phone = phone
-            profile_get_qs.email = email
-            profile_get_qs.registration_number = registration_id
-            profile_get_qs.hospital_clinic_name = hospital_or_clinic_name
-            profile_get_qs.save()
-            sms_response = send_otp(mobile=phone)
+            sms_response = send_otp(mobile=mobile)
+            # sms_response = {
+            #     "sid": random.randint(1000000000,9999999999),
+            #     "status": "sent",
+            #     "otp": "123456",
+            # }
 
             otp_create_qs = OtpVerify.objects.create(
                 otp_sid=sms_response['sid'],
@@ -137,7 +145,8 @@ def register_user_ajax(request):
                 otp=sms_response['otp'],
                 user=profile_get_qs
             )
-            message = "Data Saved"
+            status = "success"
+            message = "Otp Sent"
         else:
             message = "Record Not Found"
     else:
@@ -149,9 +158,7 @@ def register_user_ajax(request):
     return JsonResponse(json_response)
 
 
-@login_required
-def verify_mobile_ajax(request):
-    template_name = "app_cerviscreen/html/register.html"
+def patient_login(request):
     print('request.api_url---', request.api_url)
     status = "failure"
     message = "Invalid Form Data"
@@ -159,8 +166,9 @@ def verify_mobile_ajax(request):
 
     if request.method == "POST":
         otp = request.POST['otp']
+        mobile = request.POST['mobile']
 
-        profile_get_qs = get_object_or_404(Profile, user=request.user)
+        profile_get_qs = Profile.objects.get(phone=mobile, role="patient")
         otp_get_qs = OtpVerify.objects.filter(user=profile_get_qs, is_verified=False, has_expired=False).order_by(
             '-date_time')
         print("otp_get_qs: ", otp_get_qs)
@@ -174,8 +182,26 @@ def verify_mobile_ajax(request):
 
                 profile_get_qs.is_mobile_verified = True
                 profile_get_qs.save()
-                message = "Mobile Verified"
-                return redirect(reverse("pharmamg_cust:home", kwargs={"role": profile_get_qs.role}))
+                message = "Otp Verified"
+
+                #     redirect to home page
+                username = profile_get_qs.user.username
+                user = authenticate(request, username=username, password=settings.CUSTOMER_LOGIN_PWD)
+                if user:
+                    login(request, user)
+
+                    profile_get_qs, is_created = Profile.objects.get_or_create(
+                        user=user,
+                        role="patient"
+                    )
+
+                    print(profile_get_qs)
+                    if is_created:
+                        messages.success(request, f'Welcome {username.title()}!!!')
+                    else:
+                        messages.success(request, f'Hi {username.title()}, welcome back!')
+
+                    return redirect('pharmamg:patient_home')
             else:
                 message = "Invalid OTP!!!"
         else:
@@ -185,11 +211,12 @@ def verify_mobile_ajax(request):
 
     json_response['status'] = status
     json_response['message'] = message
+    json_response['role'] = "patient"
 
-    return render(request, template_name, json_response)
+    return JsonResponse(json_response)
 
 
-def logout_request(request):
+def patient_logout(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect("/")

@@ -19,7 +19,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from app_account.views import home_view, business_login, business_logout
+from app_account.views import home_view, business_login, business_logout, register_user_ajax, \
+    patient_login, patient_logout
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +28,11 @@ urlpatterns = [
     path('', home_view, name="home"),
     path('bui_login/', business_login, name="bui_login"),
     path('bui_logout/', business_logout, name="bui_logout"),
+
+    path('register_user_ajax/', register_user_ajax, name="send_otp"),
+    path('patient_login/', patient_login, name="patient_login"),
+    path('patient_logout/', patient_logout, name="patient_logout"),
+
 
     path('pharma-mg/', include(('app_pharma_mg.urls','app_pharma_mg'), namespace='pharmamg')),
 ]

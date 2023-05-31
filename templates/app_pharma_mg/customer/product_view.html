@@ -1,0 +1,153 @@
+{% extends "app_pharma_mg/customer/home.html" %}
+{% load static %}
+
+{% block extra_head %}
+<style>
+.card{
+
+border:1px solid #eee;
+cursor: pointer;
+}
+
+
+.weight{
+
+margin-top: -65px;
+transition: all 0.5s;
+}
+
+.weight small{
+
+color: #e2dede;
+}
+
+.buttons {
+    padding: 10px;
+background-color: #d6d4d44f;
+border-radius: 4px;
+position: relative;
+margin-top: 7px;
+opacity: 0;
+transition: all 0.8s;
+}
+
+
+.cart-button {
+    height: 48px
+}
+
+.cart-button:focus {
+    box-shadow: none
+}
+
+
+@keyframes item {
+    0% {
+        opacity: 1;
+        top: 30%;
+        left: 30%
+    }
+
+    25% {
+        opacity: 1;
+        left: 26%;
+        top: 0%
+    }
+
+    50% {
+        opacity: 1;
+        left: 23%;
+        top: -22%
+    }
+
+    75% {
+        opacity: 1;
+        left: 19%;
+        top: -18%
+    }
+
+    100% {
+        opacity: 1;
+        left: 14%;
+        top: 28%
+    }
+}
+
+
+
+.card:hover .buttons{
+
+    opacity: 1;
+}
+
+
+.card:hover .weight{
+
+     margin-top: 10px;
+}
+
+.card:hover{
+
+    transform: scale(1.04);
+    z-index: 2;
+    overflow: hidden;
+}
+</style>
+{% endblock extra_head %}
+
+{% block main_content %}
+<div class="container my-3">
+   <div class="row">
+      <div class="col-md-12">
+         <input class="filter" placeholder="Search Products" />
+      </div>
+   </div>
+</div>
+
+<div class="container">
+    <div class="row g-1">
+        {% for product in product_get_qs %}
+        <div class="col-md-3 mx-2 my-3">
+            <div class="card p-3 text-center" data-string="{{product.item_name}}">
+              <div class="text-center">
+                    <img src="{{product.item_image.url}}" width="200">
+                </div>
+                <div class="product-details">
+                     <span class="font-weight-bold d-block">Rs. {{product.item_price}}</span>
+                     <span>{{product.item_name}}  {{product.item_dose}}</span>
+                     <span>Brand <u>{{product.item_brand}}</u></span>
+                     <span>Brand <u>{{product.item_manufacturer}}</u></span>
+                     <div class="buttons d-flex flex-row">
+                        <a href="{% url 'pharmamg:cart_add' id=product.item_id %}" class="btn btn-success w-100 cart-button btn-block">Add to cart</a>
+                     </div>
+
+                     <div class="weight text-truncate">
+                        <small>{{product.item_information}}</small>
+                     </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock main_content %}
+
+
+{% block extra_javascript %}
+
+<script type="text/javascript">
+$(".filter").on("keyup", function() {
+  var input = $(this).val().toUpperCase();
+
+  $(".card").each(function() {
+    if ($(this).data("string").toUpperCase().indexOf(input) < 0) {
+      $(this).hide();
+    } else {
+      $(this).show();
+    }
+  })
+});
+
+</script>
+
+{% endblock extra_javascript %}

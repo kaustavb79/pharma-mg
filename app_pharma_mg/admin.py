@@ -23,15 +23,15 @@ class PrescriptionAdminReadOnly(admin.ModelAdmin):
 
 
 class TransactionAdminReadOnly(admin.ModelAdmin):
-    readonly_fields = ('date_time','transaction_mode',)
+    readonly_fields = ('date_time',)
 
 
 class OrderAdminReadOnly(admin.ModelAdmin):
-    readonly_fields = ('date_time', 'mode', 'total_amount', 'placed_by', 'transaction', 'store',)
+    readonly_fields = ('date_time', )
 
 
 class ConsultationAdminReadOnly(admin.ModelAdmin):
-    readonly_fields = ('date_time', 'mode', 'total_amount', 'placed_by', 'transaction', 'clinic',)
+    readonly_fields = ('date_time', )
 
 
 class ItemAdminReadOnly(admin.ModelAdmin):

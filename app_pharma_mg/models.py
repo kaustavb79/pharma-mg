@@ -47,6 +47,7 @@ TIMINGS = (
     )),
 )
 
+
 class Pharmacy(models.Model):
     pid = models.UUIDField(primary_key=True, default=uuid.uuid4)
     added_by = models.ForeignKey(Profile, on_delete=models.CASCADE)
@@ -100,10 +101,10 @@ class PharmacyUsers(models.Model):
 
 class Clinic(models.Model):
     TIMINGS = (
-        ('9-6','9 am to 6 pm'),
-        ('9-8','9 am to 8 pm'),
-        ('12-8','12 am to 8 pm'),
-        ('12-10','12 am to 10 pm'),
+        ('9-6', '9 am to 6 pm'),
+        ('9-8', '9 am to 8 pm'),
+        ('12-8', '12 am to 8 pm'),
+        ('12-10', '12 am to 10 pm'),
     )
 
     cid = models.UUIDField(primary_key=True, default=uuid.uuid4)
@@ -113,7 +114,7 @@ class Clinic(models.Model):
     address = models.TextField(blank=True, null=True)
 
     type_of_clinic = models.CharField(blank=True, null=True, max_length=100)
-    clinic_timing = models.CharField(blank=True, null=True, max_length=100,choices=TIMINGS)
+    clinic_timing = models.CharField(blank=True, null=True, max_length=100, choices=TIMINGS)
 
     registered_phone = models.CharField(blank=True, null=True, max_length=15)
     additional_contact = models.CharField(blank=True, null=True, max_length=15)
@@ -161,23 +162,26 @@ class ClinicUsers(models.Model):
         return f"{self.clinic_user_id}"
 
 
+def product_id_create():
+    return "PR_"+uuid.uuid4()
+
 class Item(models.Model):
     CATEGORY = (
-        ('drugs','DRUG'),
-        ('antibiotic','ANIT-BIOTICS'),
-        ('syrup','SYRUP'),
-        ('allopathy','ALLOPATHY'),
-        ('homeopathy','HOMEOPATHY'),
-        ('vitamins_supplements','VITAMINS and SUPPLEMENTS'),
-        ('personal_care','PERSONAL CARE'),
-        ('protein','PROTEIN SUPPLEMENTS'),
+        ('drugs', 'DRUG'),
+        ('antibiotic', 'ANIT-BIOTICS'),
+        ('syrup', 'SYRUP'),
+        ('allopathy', 'ALLOPATHY'),
+        ('homeopathy', 'HOMEOPATHY'),
+        ('vitamins_supplements', 'VITAMINS and SUPPLEMENTS'),
+        ('personal_care', 'PERSONAL CARE'),
+        ('protein', 'PROTEIN SUPPLEMENTS'),
     )
 
-    item_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    item_id = models.CharField(primary_key=True, default=product_id_create,max_length=200)
     pharmacy = models.ForeignKey(Pharmacy, on_delete=models.CASCADE, blank=True, null=True)
 
     item_name = models.CharField(blank=True, null=True, max_length=200)
-    item_category = models.CharField(blank=True, null=True,choices=CATEGORY, max_length=200)
+    item_category = models.CharField(blank=True, null=True, choices=CATEGORY, max_length=200)
     item_price = models.FloatField(blank=True, null=True)
     item_stock = models.IntegerField(blank=True, null=True)
     item_composition = models.CharField(blank=True, null=True, max_length=200)
@@ -223,17 +227,16 @@ class Prescription(models.Model):
 
 
 class Transaction(models.Model):
-
     STATUS = (
-        ('success','SUCCESS'),
-        ('incomplete','ON HOLD'),
-        ('failed','FAILED'),
-        ('rollbacked','ROLLBACKED'),
+        ('success', 'SUCCESS'),
+        ('incomplete', 'ON HOLD'),
+        ('failed', 'FAILED'),
+        ('rollbacked', 'ROLLBACKED'),
     )
 
     transaction_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
 
-    transaction_status = models.CharField(blank=True, null=True,choices=STATUS, max_length=50)
+    transaction_status = models.CharField(blank=True, null=True, choices=STATUS, max_length=50)
     transaction_mode = models.CharField(blank=True, null=True, max_length=50)
 
     order_updated_on = models.DateTimeField(auto_now=True)
@@ -248,23 +251,32 @@ class Transaction(models.Model):
 
 class Order(models.Model):
     MODE = (
-        ('online','ONLINE'),
-        ('offline','STORE POS'),
-        ('oncall','ON CALL ORDER'),
+        ('online', 'ONLINE'),
+        ('offline', 'STORE POS'),
+        ('oncall', 'ON CALL ORDER'),
+    )
+
+    STATUS = (
+        ('placed', 'ORDER PLACED'),
+        ('packed', 'ORDER PACKED'),
+        ('delivery', 'OUT FOR DELIVERY'),
+        ('delivered', 'DELIVERED'),
     )
 
     order_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
 
-    placed_by = models.ForeignKey(Profile, on_delete=models.CASCADE,blank=True,null=True)
-    store = models.ForeignKey(Pharmacy, on_delete=models.CASCADE,blank=True,null=True)
+    placed_by = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
+    store = models.ForeignKey(Pharmacy, on_delete=models.CASCADE, blank=True, null=True)
     item = models.ManyToManyField(Item, blank=True)
-    transaction = models.OneToOneField(Transaction, on_delete=models.CASCADE,blank=True,null=True)
+    transaction = models.OneToOneField(Transaction, on_delete=models.CASCADE, blank=True, null=True)
 
-    prescription = models.ManyToManyField(Prescription,blank=True)
+    prescription = models.ManyToManyField(Prescription, blank=True)
 
-    total_amount = models.FloatField(blank=True,null=True)
+    total_amount = models.FloatField(blank=True, null=True)
 
-    mode = models.CharField(blank=True,null=True,choices=MODE,default="offline",max_length=100)
+    mode = models.CharField(blank=True, null=True, choices=MODE, default="offline", max_length=100)
+    order_status = models.CharField(blank=True, null=True, choices=STATUS, max_length=100)
+
 
     order_updated_on = models.DateTimeField(auto_now=True)
     date_time = models.DateTimeField(auto_now_add=True)
@@ -283,31 +295,30 @@ class Consultation(models.Model):
         ('oncall', 'ON CALL'),
     )
 
-
     STATUS = (
-        ('canceled','CANCELED'),
-        ('rescheduled','RESCHUDLED'),
-        ('booked','BOOKED'),
-        ('ongoing','ONGOING'),
-        ('completed','COMPLETED'),
+        ('canceled', 'CANCELED'),
+        ('rescheduled', 'RESCHUDLED'),
+        ('booked', 'BOOKED'),
+        ('ongoing', 'ONGOING'),
+        ('completed', 'COMPLETED'),
     )
 
     consultation_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
 
-    placed_by = models.ForeignKey(Profile, on_delete=models.CASCADE,blank=True,null=True)
-    clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE,blank=True,null=True)
-    transaction = models.OneToOneField(Transaction, on_delete=models.CASCADE,blank=True,null=True)
+    placed_by = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
+    clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE, blank=True, null=True)
+    transaction = models.OneToOneField(Transaction, on_delete=models.CASCADE, blank=True, null=True)
 
-    total_amount = models.FloatField(blank=True,null=True)
+    total_amount = models.FloatField(blank=True, null=True)
 
-    prescription = models.OneToOneField(Prescription,on_delete=models.CASCADE,blank=True,null=True)
+    prescription = models.OneToOneField(Prescription, on_delete=models.CASCADE, blank=True, null=True)
 
-    mode = models.CharField(blank=True,null=True,choices=MODE,default="offline",max_length=100)
+    mode = models.CharField(blank=True, null=True, choices=MODE, default="offline", max_length=100)
 
-    appointment_time = models.CharField(blank=True,null=True,choices=TIMINGS,max_length=100)
-    appointment_date = models.CharField(blank=True,null=True,max_length=100)
+    appointment_time = models.CharField(blank=True, null=True, choices=TIMINGS, max_length=100)
+    appointment_date = models.CharField(blank=True, null=True, max_length=100)
 
-    status = models.CharField(blank=True,null=True,choices=STATUS,max_length=100)
+    status = models.CharField(blank=True, null=True, choices=STATUS, max_length=100)
 
     order_updated_on = models.DateTimeField(auto_now=True)
     date_time = models.DateTimeField(auto_now_add=True)
