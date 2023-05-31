@@ -12,22 +12,22 @@
         <form class="px-3 py-4 text-center" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {% for field in form %}
-                {% if field.label != "Profile pic" %}
-                <div class="form-group row my-4">
-                    <label class="form-label col-sm-4"
-                           for="{{ field.auto_id }}">{{ field.label }}</label>
-                    <div class="col-sm-8">
+            {% if field.label != "Profile pic" %}
+            <div class="form-group row my-4">
+                <label class="form-label col-sm-4"
+                       for="{{ field.auto_id }}">{{ field.label }}</label>
+                <div class="col-sm-8">
                     {{ field }}
-                    </div>
                 </div>
-                {% else %}
-                <div class="mb-3 my-4 row">
-                    <label class="form-label col-sm-4" for="{{ field.auto_id }}">{{ field.label }}</label>
-                    <div class="col-sm-8">
+            </div>
+            {% else %}
+            <div class="mb-3 my-4 row">
+                <label class="form-label col-sm-4" for="{{ field.auto_id }}">{{ field.label }}</label>
+                <div class="col-sm-8">
                     {{ field }}
-                    </div>
                 </div>
-                {% endif %}
+            </div>
+            {% endif %}
             {% endfor %}
             <button class="w-40 btn btn-lg btn-primary my-4" type="submit">Add User</button>
         </form>

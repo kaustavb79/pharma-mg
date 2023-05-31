@@ -1,6 +1,7 @@
-import random
-from django.conf import settings
 import logging
+import random
+
+from django.conf import settings
 
 logger = logging.getLogger("app_account")
 

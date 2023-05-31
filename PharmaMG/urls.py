@@ -33,8 +33,7 @@ urlpatterns = [
     path('patient_login/', patient_login, name="patient_login"),
     path('patient_logout/', patient_logout, name="patient_logout"),
 
-
-    path('pharma-mg/', include(('app_pharma_mg.urls','app_pharma_mg'), namespace='pharmamg')),
+    path('pharma-mg/', include(('app_pharma_mg.urls', 'app_pharma_mg'), namespace='pharmamg')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

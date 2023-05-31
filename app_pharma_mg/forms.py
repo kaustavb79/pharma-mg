@@ -1,9 +1,10 @@
+from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm, DateInput, TextInput, NumberInput, FileInput, CheckboxInput, \
     EmailInput
 from django.utils.translation import gettext_lazy as _
-from django import forms
-from app_pharma_mg.models import Pharmacy, Clinic, Item, Order, Consultation
+
+from app_pharma_mg.models import Pharmacy, Clinic, Item
 
 
 class NewPharmacyRegistrationForm(ModelForm):
@@ -191,7 +192,7 @@ class NewClinicRegistrationForm(ModelForm):
                     'help_text': 'Is Clinic genuine?'
                 }
             ),
-            'clinic_timing':forms.Select(
+            'clinic_timing': forms.Select(
                 attrs={
                     'class': 'form-select',
                     'id': 'formSelectTiming'
@@ -483,4 +484,3 @@ class NewClinicEmployeeForm(forms.Form):
             }
         )
     )
-

@@ -9,9 +9,9 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import json
 import os
 from pathlib import Path
-import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -184,7 +184,6 @@ SMS_CLIENT = Client(twilio_config['account_sid'], twilio_config['auth_token'])
 ---- TWILIO CONFIG END ----
 """
 
-
 """
 ----- DJANGO LOGGER -----
 """
@@ -192,7 +191,7 @@ SMS_CLIENT = Client(twilio_config['account_sid'], twilio_config['auth_token'])
 LOGS_DIR = BASE_DIR / "logs"
 
 if os.path.exists(LOGS_DIR) and os.path.isdir(LOGS_DIR):
-    print("LOGS_DIR: ",LOGS_DIR)
+    print("LOGS_DIR: ", LOGS_DIR)
 else:
     os.mkdir(LOGS_DIR)
 

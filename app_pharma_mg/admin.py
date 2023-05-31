@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import *
 
 
@@ -27,11 +28,11 @@ class TransactionAdminReadOnly(admin.ModelAdmin):
 
 
 class OrderAdminReadOnly(admin.ModelAdmin):
-    readonly_fields = ('date_time', )
+    readonly_fields = ('date_time',)
 
 
 class ConsultationAdminReadOnly(admin.ModelAdmin):
-    readonly_fields = ('date_time', )
+    readonly_fields = ('date_time',)
 
 
 class ItemAdminReadOnly(admin.ModelAdmin):

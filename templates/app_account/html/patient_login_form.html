@@ -10,22 +10,25 @@
                 <div class="NewSignIn_loginFormWrap">
                     <h2 class="NewSignIn_typography__AV67I">Hi</h2>
                     <p>Please enter your mobile number to login</p>
-                    <form id="patient_login_form" name="patientLoginForm" method="post" action="javascript:void(0)" enctype="multipart/form-data">
+                    <form id="patient_login_form" name="patientLoginForm" method="post" action="javascript:void(0)"
+                          enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="col-auto" id="inputMobile">
                             <label class="sr-only" for="inlineFormInputGroup">Mobile Number</label>
                             <div class="input-group mb-2">
-                              <div class="input-group-prepend">
-                                <div class="input-group-text">+91</div>
-                              </div>
-                              <input type="tel" name="mobile" class="form-control" id="inlineFormInputGroup" minlength="10" required maxlength="10" placeholder="Mobile Number">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">+91</div>
+                                </div>
+                                <input type="tel" name="mobile" class="form-control" id="inlineFormInputGroup"
+                                       minlength="10" required maxlength="10" placeholder="Mobile Number">
                             </div>
                         </div>
                         <button id="send_otp" class="w-30 my-3 btn btn-primary" type="submit">Send OTP</button>
                     </form>
                     <p class="NewSignIn_signinInfo__eBbey">By signing up, I agree to the <a target="_blank"
-                            href="/privacy-policy">Privacy Policy</a>,<a target="_blank" href="/terms"> Terms and
-                            Conditions</a> of Pharma MG.</p>
+                                                                                            href="/privacy-policy">Privacy
+                        Policy</a>,<a target="_blank" href="/terms"> Terms and
+                        Conditions</a> of Pharma MG.</p>
                 </div>
             </div>
         </div>

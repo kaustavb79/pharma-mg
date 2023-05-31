@@ -92,16 +92,17 @@ transition: all 0.8s;
     z-index: 2;
     overflow: hidden;
 }
+
 </style>
 {% endblock extra_head %}
 
 {% block main_content %}
 <div class="container my-3">
-   <div class="row">
-      <div class="col-md-12">
-         <input class="filter" placeholder="Search Products" />
-      </div>
-   </div>
+    <div class="row">
+        <div class="col-md-12">
+            <input class="filter" placeholder="Search Products"/>
+        </div>
+    </div>
 </div>
 
 <div class="container">
@@ -109,21 +110,22 @@ transition: all 0.8s;
         {% for product in product_get_qs %}
         <div class="col-md-3 mx-2 my-3">
             <div class="card p-3 text-center" data-string="{{product.item_name}}">
-              <div class="text-center">
+                <div class="text-center">
                     <img src="{{product.item_image.url}}" width="200">
                 </div>
                 <div class="product-details">
-                     <span class="font-weight-bold d-block">Rs. {{product.item_price}}</span>
-                     <span>{{product.item_name}}  {{product.item_dose}}</span>
-                     <span>Brand <u>{{product.item_brand}}</u></span>
-                     <span>Brand <u>{{product.item_manufacturer}}</u></span>
-                     <div class="buttons d-flex flex-row">
-                        <a href="{% url 'pharmamg:cart_add' id=product.item_id %}" class="btn btn-success w-100 cart-button btn-block">Add to cart</a>
-                     </div>
+                    <span class="font-weight-bold d-block">Rs. {{product.item_price}}</span>
+                    <span>{{product.item_name}}  {{product.item_dose}}</span>
+                    <span>Brand <u>{{product.item_brand}}</u></span>
+                    <span>Brand <u>{{product.item_manufacturer}}</u></span>
+                    <div class="buttons d-flex flex-row">
+                        <a href="{% url 'pharmamg:cart_add' id=product.item_id %}"
+                           class="btn btn-success w-100 cart-button btn-block">Add to cart</a>
+                    </div>
 
-                     <div class="weight text-truncate">
+                    <div class="weight text-truncate">
                         <small>{{product.item_information}}</small>
-                     </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -147,6 +149,7 @@ $(".filter").on("keyup", function() {
     }
   })
 });
+
 
 </script>
 

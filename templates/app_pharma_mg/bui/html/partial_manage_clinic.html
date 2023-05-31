@@ -7,105 +7,141 @@
     <td>{{clinic.clinic.is_verified}}</td>
     <td>
         <ul class="list-group list-group-horizontal">
-          <li class="list-group-item">
-              <a type="button" class="btn btn-outline-danger delete" href="{% url 'pharmamg:delete_clinic' clinic_id=clinic.clinic %}"><i class="fas fa-trash bg-outline-danger" aria-hidden="true"></i></a>
-          </li>
-          <li class="list-group-item">
+            <li class="list-group-item">
+                <a type="button" class="btn btn-outline-danger delete"
+                   href="{% url 'pharmamg:delete_clinic' clinic_id=clinic.clinic %}"><i
+                        class="fas fa-trash bg-outline-danger" aria-hidden="true"></i></a>
+            </li>
+            <li class="list-group-item">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-outline-primary edit" data-bs-toggle="modal" data-bs-target="#editClinic" onload="editData('{{clinic.clinic}}')">
-                  <i class="fas fa-edit" aria-hidden="true"></i>
+                <button type="button" class="btn btn-outline-primary edit" data-bs-toggle="modal"
+                        data-bs-target="#editClinic" onload="editData('{{clinic.clinic}}')">
+                    <i class="fas fa-edit" aria-hidden="true"></i>
                 </button>
 
-                <div class="modal fade" id="editClinic" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        {% include 'snippets/alerts/form_alerts.html' %}
-                        <form class="px-3 py-4 text-center editForm" name="editForm" action="javascript:void(0)" method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <div class="form-group row my-4">
-                                <label class="col-sm-4 col-form-label " for="id_clinic_id">Clinic ID</label>
-                                <div class="col-sm-8">
-                                <input type="text" name="clinic_id" value="{{clinic.clinic}}" class="form-control" maxlength="200" disabled id="id_clinic_id">
-                                </div>
+                <div class="modal fade" id="editClinic" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                             </div>
-                            <div class="form-group row my-4">
-                                <label class="col-sm-4 col-form-label " for="id_name">Clinic Name</label>
-                                <div class="col-sm-8">
-                                <input type="text" name="name" class="form-control" value="{{clinic.clinic.name}}" maxlength="200" required="" id="id_name">
-                                </div>
+                            <div class="modal-body">
+                                {% include 'snippets/alerts/form_alerts.html' %}
+                                <form class="px-3 py-4 text-center editForm" name="editForm" action="javascript:void(0)"
+                                      method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="form-group row my-4">
+                                        <label class="col-sm-4 col-form-label " for="id_clinic_id">Clinic ID</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="clinic_id" value="{{clinic.clinic}}"
+                                                   class="form-control" maxlength="200" disabled id="id_clinic_id">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row my-4">
+                                        <label class="col-sm-4 col-form-label " for="id_name">Clinic Name</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="name" class="form-control"
+                                                   value="{{clinic.clinic.name}}" maxlength="200" required=""
+                                                   id="id_name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row my-4">
+                                        <label class="col-sm-4 col-form-label " for="id_type_of_clinic">Clinic
+                                            Type</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="type_of_clinic" class="form-control"
+                                                   value="{{clinic.clinic.type_of_clinic}}" maxlength="200" required=""
+                                                   id="id_type_of_clinic">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row my-4">
+                                        <label class="col-sm-4 col-form-label " for="id_email">Email Address</label>
+                                        <div class="col-sm-8">
+                                            <input type="email" name="email" class="form-control"
+                                                   value="{{clinic.clinic.email}}" maxlength="200" disabled
+                                                   id="id_email">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row my-4">
+                                        <label class="col-sm-4 col-form-label " for="id_store_phone">Phone
+                                            Number</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" name="registered_phone" class="form-control"
+                                                   value="{{clinic.clinic.registered_phone}}" maxlength="15" disabled
+                                                   id="id_store_phone">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row my-4">
+                                        <label class="col-sm-4 col-form-label " for="id_store_additional_contact">Additional
+                                            Phone Number</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" name="additional_contact" class="form-control"
+                                                   help_text="Enter additional contact number" maxlength="15"
+                                                   id="id_store_additional_contact">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row my-4">
+                                        <label class="col-sm-4 col-form-label " for="id_address">Address</label>
+                                        <div class="col-sm-8">
+                                            <textarea name="address" cols="40" rows="10" class="form-control"
+                                                      required="" id="id_address"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 my-4 row">
+                                        <label class="form-label col-sm-4 col-form-label "
+                                               for="id_registration_certificates">Registration certificates</label>
+                                        <div class="col-sm-8">
+                                            <input type="file" name="registration_certificates" class="form-control"
+                                                   help_text="Upload Clinic related registration certificates"
+                                                   multiple="" id="id_registration_certificates">
+                                        </div>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label" for="id_is_verified">
+                                            Is verified
+                                        </label>
+                                        <input type="checkbox" name="is_verified" class="form-check-input"
+                                               value="{{clinic.clinic.is_verified}}" help_text="Is Clinic genuine?"
+                                               required="" id="id_is_verified">
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label" for="id_is_phone_verified">
+                                            Is phone verified
+                                        </label>
+                                        <input type="checkbox" name="is_phone_verified"
+                                               value="{{clinic.clinic.is_phone_verified}}" class="form-check-input"
+                                               required="" id="id_is_phone_verified">
+                                    </div>
+                                    <div class="form-group row my-4">
+                                        <label class="col-sm-4 col-form-label " for="id_gst_registration_number">Gst
+                                            registration number</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="gst_registration_number" class="form-control"
+                                                   value="{{clinic.clinic.gst_registration_number}}"
+                                                   help_text="Enter GST Registration number" maxlength="150" required=""
+                                                   id="id_gst_registration_number">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row my-4">
+                                        <label class="col-sm-4 col-form-label " for="id_date_of_establishment">Date of
+                                            establishment</label>
+                                        <div class="col-sm-8">
+                                            <input type="date" name="date_of_establishment" class="form-control"
+                                                   help_text="Enter Date Of Establishment"
+                                                   value="{{clinic.clinic.date_of_establishment}}" disabled
+                                                   id="id_date_of_establishment">
+                                        </div>
+                                    </div>
+                                    <button class="w-40 btn btn-lg btn-primary my-4" type="submit">Save Changes</button>
+                                </form>
                             </div>
-                            <div class="form-group row my-4">
-                                <label class="col-sm-4 col-form-label " for="id_type_of_clinic">Clinic Type</label>
-                                <div class="col-sm-8">
-                                <input type="text" name="type_of_clinic" class="form-control" value="{{clinic.clinic.type_of_clinic}}" maxlength="200" required="" id="id_type_of_clinic">
-                                </div>
-                            </div>
-                            <div class="form-group row my-4">
-                                <label class="col-sm-4 col-form-label " for="id_email">Email Address</label>
-                                <div class="col-sm-8">
-                                <input type="email" name="email" class="form-control" value="{{clinic.clinic.email}}" maxlength="200" disabled id="id_email">
-                                </div>
-                            </div>
-                            <div class="form-group row my-4">
-                                <label class="col-sm-4 col-form-label " for="id_store_phone">Phone Number</label>
-                                <div class="col-sm-8">
-                                <input type="number" name="registered_phone" class="form-control" value="{{clinic.clinic.registered_phone}}" maxlength="15" disabled id="id_store_phone">
-                                </div>
-                            </div>
-                            <div class="form-group row my-4">
-                                <label class="col-sm-4 col-form-label " for="id_store_additional_contact">Additional Phone Number</label>
-                                <div class="col-sm-8">
-                                <input type="number" name="additional_contact" class="form-control" help_text="Enter additional contact number" maxlength="15" id="id_store_additional_contact">
-                                </div>
-                            </div>
-                            <div class="form-group row my-4">
-                                <label class="col-sm-4 col-form-label " for="id_address">Address</label>
-                                <div class="col-sm-8">
-                                <textarea name="address" cols="40" rows="10" class="form-control" required="" id="id_address"></textarea>
-                                </div>
-                            </div>
-                            <div class="mb-3 my-4 row">
-                                <label class="form-label col-sm-4 col-form-label " for="id_registration_certificates">Registration certificates</label>
-                                <div class="col-sm-8">
-                                <input type="file" name="registration_certificates" class="form-control" help_text="Upload Clinic related registration certificates" multiple="" id="id_registration_certificates">
-                                </div>
-                            </div>
-                            <div class="form-check">
-                              <label class="form-check-label" for="id_is_verified">
-                                  Is verified
-                              </label>
-                                <input type="checkbox" name="is_verified" class="form-check-input" value="{{clinic.clinic.is_verified}}" help_text="Is Clinic genuine?" required="" id="id_is_verified">
-                            </div>
-                            <div class="form-check">
-                              <label class="form-check-label" for="id_is_phone_verified">
-                                  Is phone verified
-                              </label>
-                                <input type="checkbox" name="is_phone_verified" value="{{clinic.clinic.is_phone_verified}}" class="form-check-input" required="" id="id_is_phone_verified">
-                            </div>
-                            <div class="form-group row my-4">
-                                <label class="col-sm-4 col-form-label " for="id_gst_registration_number">Gst registration number</label>
-                                <div class="col-sm-8">
-                                <input type="text" name="gst_registration_number" class="form-control" value="{{clinic.clinic.gst_registration_number}}" help_text="Enter GST Registration number" maxlength="150" required="" id="id_gst_registration_number">
-                                </div>
-                            </div>
-                            <div class="form-group row my-4">
-                                <label class="col-sm-4 col-form-label " for="id_date_of_establishment">Date of establishment</label>
-                                <div class="col-sm-8">
-                                <input type="date" name="date_of_establishment" class="form-control" help_text="Enter Date Of Establishment" value="{{clinic.clinic.date_of_establishment}}" disabled id="id_date_of_establishment">
-                                </div>
-                            </div>
-                            <button class="w-40 btn btn-lg btn-primary my-4" type="submit">Save Changes</button>
-                        </form>
-                      </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-          </li>
+            </li>
         </ul>
     </td>
 </tr>

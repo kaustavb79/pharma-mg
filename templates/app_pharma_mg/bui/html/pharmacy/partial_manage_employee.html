@@ -6,9 +6,11 @@
     <td>{{employee.role|title}}</td>
     <td>
         <ul class="list-group list-group-horizontal">
-          <li class="list-group-item">
-              <a type="button" class="btn btn-outline-danger delete" href="{% url 'pharmamg:delete_pharmacy_employee' user_id=employee.pharmacy_user_id %}"><i class="fas fa-trash bg-outline-danger" aria-hidden="true"></i></a>
-          </li>
+            <li class="list-group-item">
+                <a type="button" class="btn btn-outline-danger delete"
+                   href="{% url 'pharmamg:delete_pharmacy_employee' user_id=employee.pharmacy_user_id %}"><i
+                        class="fas fa-trash bg-outline-danger" aria-hidden="true"></i></a>
+            </li>
         </ul>
     </td>
 </tr>

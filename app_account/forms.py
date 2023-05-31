@@ -1,7 +1,5 @@
 from django import forms
 
-from app_account.models import ROLES
-
 BUI_LOGIN_ROLES = (
     ('admin', 'ADMIN'),
     ('doctor', 'DOCTOR'),

@@ -2,63 +2,66 @@
 {% load static %}
 
 <html lang="en">
-    <head>
-        <meta name="viewport" content="user-scalable=no, width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-        <meta content="utf-8" http-equiv="encoding">
-        <title>{% block title %}Pharma MG{% endblock %}</title>
+<head>
+    <meta name="viewport"
+          content="user-scalable=no, width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <title>{% block title %}Pharma MG{% endblock %}</title>
 
-        <link href="{% static 'website/favicon/favicon.png' %}" rel="icon" sizes="16x16" type="image/png">
-        <!-- pre requisites -->
-        <script type="text/javascript" src="{% static 'jquery/js/jquery-3.6.1.js' %}"></script>
-        <script type="text/javascript" src="{% static 'translate/google_translate.js' %}"></script>
-        <link rel="stylesheet" href="{% static 'bootstrap-5.2.2-dist/css/bootstrap.min.css' %}"/>
-        <link rel="stylesheet" href="{% static 'fontawesome-6.4.0/css/all.min.css' %}"/>
-        <script type="text/javascript" src="{% static 'bootstrap-5.2.2-dist/js/bootstrap.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.js' %}"></script>
-        <script type="text/javascript" src="{% static 'chartjs/chart-2.9.4.js' %}"></script>
-        <script type="text/javascript" src="{% static 'jquery/js/popper.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'jquery/js/popper.min.js' %}"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
-        integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
-        <link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet"/>
-        <script src="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-        <!-- pre requisites -->
+    <link href="{% static 'website/favicon/favicon.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <!-- pre requisites -->
+    <script type="text/javascript" src="{% static 'jquery/js/jquery-3.6.1.js' %}"></script>
+    <script type="text/javascript" src="{% static 'translate/google_translate.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'bootstrap-5.2.2-dist/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'fontawesome-6.4.0/css/all.min.css' %}"/>
+    <script type="text/javascript" src="{% static 'bootstrap-5.2.2-dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.js' %}"></script>
+    <script type="text/javascript" src="{% static 'chartjs/chart-2.9.4.js' %}"></script>
+    <script type="text/javascript" src="{% static 'jquery/js/popper.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'jquery/js/popper.min.js' %}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+          integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet"/>
+    <script src="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
+            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <!-- pre requisites -->
 
-        <style>{% include 'snippets/css/base.css' %}</style>
+    <style>{% include 'snippets/css/base.css' %}</style>
 
-        {% block head %} {% endblock %}
-    </head>
+    {% block head %} {% endblock %}
+</head>
 
-    <body class="body-class google_translate_element" id="body-id">
-        <!-- HEADER -->
-        {% if user.is_authenticated %}
-        {% else %}
-            {% include 'snippets/header/header_unauthenticated.html' %}
-        {% endif %}
+<body class="body-class google_translate_element" id="body-id">
+<!-- HEADER -->
+{% if user.is_authenticated %}
+{% else %}
+{% include 'snippets/header/header_unauthenticated.html' %}
+{% endif %}
 
-        <!-- MAIN CONTENT -->
-        <main>
-            {% block content %}
-            {% endblock %}
-        </main>
+<!-- MAIN CONTENT -->
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
 
-        <!-- FOOTER -->
-        {% if user.is_authenticated %}
-        {% else %}
-            {% include 'snippets/footer/footer.html' %}
-        {% endif %}
+<!-- FOOTER -->
+{% if user.is_authenticated %}
+{% else %}
+{% include 'snippets/footer/footer.html' %}
+{% endif %}
 
-        <!-- NETWORK STATUS BAR -->
-        <div class="app_status"></div>
+<!-- NETWORK STATUS BAR -->
+<div class="app_status"></div>
 
-        {% block javascript %}{% endblock %}
-        <script type="text/javascript">
+{% block javascript %}{% endblock %}
+<script type="text/javascript">
             {% include 'base.js' %}
-        </script>
-    </body>
+
+</script>
+</body>
 </html>

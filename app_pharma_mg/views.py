@@ -1,3 +1,4 @@
+import logging as log_print
 import random
 
 from django.conf import settings
@@ -5,12 +6,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
-import logging as log_print
 
-from django.template.loader import render_to_string
-from django.utils.dateparse import parse_date
-
-from app_account.models import Profile, Address
+from app_account.models import Profile
 from app_account.src.utils import generate_random_user, generate_random_patient_user
 from app_pharma_mg.forms import NewPharmacyRegistrationForm, NewPharmacyEmployeeForm, NewClinicRegistrationForm, \
     AddProductForm, NewClinicEmployeeForm
@@ -919,7 +916,7 @@ def patient_home(request):
     product_get_qs = Item.objects.all()
     context_payload = {
         "profile_get_qs": profile_get_qs,
-        "product_get_qs":product_get_qs
+        "product_get_qs": product_get_qs
     }
     return render(request=request, template_name=template, context=context_payload)
 

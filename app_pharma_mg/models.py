@@ -163,7 +163,8 @@ class ClinicUsers(models.Model):
 
 
 def product_id_create():
-    return "PR_"+uuid.uuid4()
+    return "PR_" + uuid.uuid4()
+
 
 class Item(models.Model):
     CATEGORY = (
@@ -177,7 +178,7 @@ class Item(models.Model):
         ('protein', 'PROTEIN SUPPLEMENTS'),
     )
 
-    item_id = models.CharField(primary_key=True, default=product_id_create,max_length=200)
+    item_id = models.CharField(primary_key=True, default=product_id_create, max_length=200)
     pharmacy = models.ForeignKey(Pharmacy, on_delete=models.CASCADE, blank=True, null=True)
 
     item_name = models.CharField(blank=True, null=True, max_length=200)
@@ -276,7 +277,6 @@ class Order(models.Model):
 
     mode = models.CharField(blank=True, null=True, choices=MODE, default="offline", max_length=100)
     order_status = models.CharField(blank=True, null=True, choices=STATUS, max_length=100)
-
 
     order_updated_on = models.DateTimeField(auto_now=True)
     date_time = models.DateTimeField(auto_now_add=True)

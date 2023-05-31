@@ -11,7 +11,7 @@
         <div class="card bg-white text-dark mb-4 text-center">
             <div class="card-body fw-bold lh-sm">
                 <span class="fs-1">{{orders_filter_qs|length}}</span>
-                <hr class="dropdown-divider" />
+                <hr class="dropdown-divider"/>
                 Orders Placed
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
@@ -24,11 +24,12 @@
         <div class="card bg-white text-dark mb-4 text-center">
             <div class="card-body fw-bold lh-sm">
                 <span class="fs-1">{{items_filter_qs|length}}</span>
-                <hr class="dropdown-divider" />
+                <hr class="dropdown-divider"/>
                 Medicines / Health Products Available
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-dark stretched-link" href="{% url 'pharmamg:manage_pharmacy_products' %}">Manage</a>
+                <a class="small text-dark stretched-link"
+                   href="{% url 'pharmamg:manage_pharmacy_products' %}">Manage</a>
                 <div class="small text-dark"><i class="fas fa-angle-right"></i></div>
             </div>
         </div>
@@ -38,7 +39,7 @@
         <div class="card bg-white text-dark mb-4 text-center">
             <div class="card-body fw-bold lh-sm">
                 <span class="fs-1">{{pharmacy_users_filter_qs|length}}</span>
-                <hr class="dropdown-divider" />
+                <hr class="dropdown-divider"/>
                 Employees Working
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between">

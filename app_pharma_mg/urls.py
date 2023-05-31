@@ -20,7 +20,6 @@ urlpatterns = [
     path('edit_clinic_form_ajax/', edit_form_ajax, name="edit_clinic_form_ajax"),
     path('bui_delete_clinic/<str:clinic_id>/', delete_pharmacy_ajax, name="delete_clinic"),
 
-
     # PHARMACY USER urls
     path('bui_pharmacy_dashboard/', dashboard_pharmacy_view, name="pharmacy_dashboard"),
     path('bui_pharmacy_users/', manage_pharmacy_user_view, name="manage_pharmacy_users"),
@@ -42,7 +41,6 @@ urlpatterns = [
     path('bui_schedule_consultation_ajax/', schedule_consultation_ajax, name="schedule_consultation_ajax"),
     path('bui_manage_consultation_view/', manage_consultation_view, name="manage_consultation_view"),
 
-
     # PATIENT/CUSTOMER urls
     path('patient_home/', patient_home, name="patient_home"),
     path('order_detail/', order_detail, name="order_detail"),
@@ -55,8 +53,7 @@ urlpatterns = [
     path('cart/item_decrement/<str:id>/',
          cart_views.item_decrement, name='item_decrement'),
     path('cart/cart_clear/', cart_views.cart_clear, name='cart_clear'),
-    path('cart/cart-detail/',cart_views.cart_detail,name='cart_detail'),
-    path('cart/checkout/',cart_views.checkout,name='checkout'),
-
+    path('cart/cart-detail/', cart_views.cart_detail, name='cart_detail'),
+    path('cart/checkout/', cart_views.checkout, name='checkout'),
 
 ]

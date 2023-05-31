@@ -51,7 +51,8 @@ def cart_detail(request):
     total_amt = 0
     for id, item in request.session['cart'].items():
         total_amt += int(item['quantity']) * float(item['price'])
-    return render(request, 'app_pharma_mg/customer/cart_detail.html', {'profile_get_qs':profile_get_qs,'total': total_amt + 19.47 + 20})
+    return render(request, 'app_pharma_mg/customer/cart_detail.html',
+                  {'profile_get_qs': profile_get_qs, 'total': total_amt + 19.47 + 20})
 
 
 @login_required
@@ -60,10 +61,12 @@ def checkout(request):
     total_amt = 0
     for id, item in request.session['cart'].items():
         total_amt += int(item['quantity']) * float(item['price'])
-    return render(request, 'app_pharma_mg/customer/checkout.html', {'profile_get_qs':profile_get_qs,'total': total_amt + 19.47 + 20})
+    return render(request, 'app_pharma_mg/customer/checkout.html',
+                  {'profile_get_qs': profile_get_qs, 'total': total_amt + 19.47 + 20})
 
 
 def order_detail(request):
     profile_get_qs = Profile.objects.get(user=request.user)
     order_filter_qs = Order.objects.filter(placed_by=profile_get_qs)
-    return render(request, 'app_pharma_mg/customer/order_detail.html', {'profile_get_qs':profile_get_qs,"order_filter_qs":order_filter_qs})
+    return render(request, 'app_pharma_mg/customer/order_detail.html',
+                  {'profile_get_qs': profile_get_qs, "order_filter_qs": order_filter_qs})
